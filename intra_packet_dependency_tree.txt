@@ -1,15 +1,15 @@
 Intra Packet Header Field Value Calculation Dependency
 └── IPV4 Header
     ├── Version (4 bits)
-    ├── Internet Header Length (IHL, 4 bits: Used to specify how many 4 byte words the header contains, with a minimum of 5 words (20 bytes) and a maximum of 15 words (60 bytes))
-    │   ├── Total Length (16 bits: Used to specify the number of bytes for total packet length, with a minimum of 20 bytes and a maximum of 65535 bytes)
+    ├── Internet Header Length (IHL, 4 bits: Used to specify how many 4 byte words the header contains, with a minimum of 5 words (20 bytes) and a maximum of 15 words (60 bytes)) | Calculation = decimal-to-binary((number of present IPV4 header bits (typically 160 bits) + number of present IP option bits) / 8 bits-per-byte)/ 4 bytes-per-word); If IP options bits = none, set min to 0101 or 4 words or 20 bytes)
+    │   ├── Total Length (16 bits: Used to specify the number of bytes for total packet length, with a minimum of 20 bytes and a maximum of 65535 bytes) | Calculation =  decimal-to-binary(TCP/ICMP/UDP header size in bytes (e.g, Data offset in TCP) + IHL in bytes + TCP/ICMP/UDP payload size (if present) in bytes); Must be greater or equal to than TCP/ICMP/UDP header size in bytes + IHL in bytes
     │   ├── Data (variable length in bytes, depends on Total Length and IHL: Total Length (bytes) - IHL*4(bytes/word))
     │   │   ├── TCP Header (variable length, depends on Data Offset field)
     │   │   │   ├── Source Port (16 bits)
     │   │   │   ├── Destination Port (16 bits)
     │   │   │   ├── Sequence Number (32 bits)
     │   │   │   ├── Acknowledgment Number (32 bits)
-    │   │   │   ├── Data Offset (4 bits: Used to specify the size of the TCP header in 32-bit (or 4 byte) words, with a minimum of 5 words (20 bytes) and a maximum of 15 words (60 bytes))
+    │   │   │   ├── Data Offset (4 bits: Used to specify the size of the TCP header in 32-bit (or 4 byte) words, with a minimum of 5 words (20 bytes) and a maximum of 15 words (60 bytes)) | Calculation = decimal-to-binary((number of present TCP header bits (typically 160 bits) + number of present TCP option bits) / 8 bits-per-byte)/ 4 bytes-per-word); If TCP options bits = none, set min to 0101 or 4 words or 20 bytes)
     │   │   │   ├── Reserved (3 bits)
     │   │   │   ├── Flags (9 bits)
     │   │   │   ├── Window Size (16 bits)
