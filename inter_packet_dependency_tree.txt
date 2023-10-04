@@ -113,19 +113,16 @@ Inter Packet Header Field Value Calculation Dependency
 │   ├── Packet 2 (possible reply from Destination to Source)
 │   │   ├── Source Port (should match the Destination Port of Packet 1)
 │   │   ├── Destination Port (should match the Source Port of Packet 1)
-│   │   ├── Length (the length of the UDP header and the data)
-│   │   └── Checksum (optional; calculated from the UDP header, data, and a pseudo-header)
+│   │   ├── Identical Length and Checksum computation procedure as in Packet 1
 │   ├── Subsequent Packets (within the same conversation)
 │   │   ├── From Source to Destination
 │   │   │   ├── Source Port (same as in Packet 1)
 │   │   │   ├── Destination Port (same as in Packet 1)
-│   │   │   ├── Length (varies based on the size of the UDP header and data)
-│   │   │   └── Checksum (varies based on the content of the packet)
 │   │   └── From Destination to Source
-│   │       ├── Source Port (same as in Packet 2)
-│   │       ├── Destination Port (same as in Packet 2)
-│   │       ├── Length (varies based on the size of the UDP header and data)
-│   │       └── Checksum (varies based on the content of the packet)
+│   │   |   ├── Source Port (same as in Packet 2)
+│   │   |   ├── Destination Port (same as in Packet 2)
+│   │   ├── Length (varies based on the size of the UDP header and data)
+│   │   └── Checksum (varies based on the content of the packet)
 │   └── others
 └── ICMP Session
     ├── Packet 1 (ICMP Echo Request - From Source to Destination)
